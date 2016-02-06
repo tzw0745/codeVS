@@ -29,32 +29,37 @@
 4
 */
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-long long number, s = 1, ans;
-char buffer[ 1001000 ];
+/* 设置常数 */
+#define BUFFSIZE 1001000
+#define MOD 10000
+
+long long number, block = 1, ans;
+char buffer[ BUFFSIZE ];
 int main()
 {
-	int index;
-	scanf( "%s", buffer );
-	int len = strlen( buffer );
-	for( index = 0; index < len; index++ )
-	{
-		while( isdigit( buffer[ index ] ) ){
-			number = number * 10 + buffer[ index++ ] - '0';
+	char *p = buffer;
+	gets(p);
+	while( *p ){
+		/* 转换成数字 */
+		number = 0;
+		while( isdigit( *p ) ) number = number * 10 + *p++ - '0';
+		/* 计算块大小 */
+		block = ( block * number ) % MOD;
+		/* 判断符号位 */
+		switch( *p ){
+			case 0: continue;/* 如果是结束符 */
+			case '+':{
+				/* 如果是加号 累加块，块值清空 */
+				ans = ( ans + block ) % MOD;
+				block = 1;
+			}
+			default:++p;
 		}
-		s = ( s * number ) % 10000;
-		if( buffer[ index ] == '+' )
-		{
-			ans = ( ans + s )%10000;
-			s = 1;
-			number = 0;
-		}
-		if( buffer[ index ] == '*' )
-			number = 0;
 	}
-	ans = ( ans + s ) % 10000;
+	/* 加上最后一个块 */
+	ans = ( ans + block ) % MOD;
 	printf( "%lld", ans );
 	return 0;
 }
