@@ -64,6 +64,5 @@ int main(int argc, char *argv[])
 		if( matchBrackets( buffer ) ) puts("TRUE");
 		else puts("FALSE");
 	}
-	getch();
 	return 0;
 }

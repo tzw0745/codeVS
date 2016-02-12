@@ -46,6 +46,5 @@ int main(int argc, char *argv[])
 	
 	int deep = treeDeep(1);
 	printf("%d %d", treeWidth(), deep);
-	getch();
 	return 0;
 }
